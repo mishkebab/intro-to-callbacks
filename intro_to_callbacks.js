@@ -43,12 +43,12 @@ class Clock {
 
 // const clock = new Clock();
 
-const readline = require('readline');
-const reader = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
+// const readline = require('readline');
+// const reader = readline.createInterface({
+//   input: process.stdin,
+//   output: process.stdout
   
-});
+// });
 
 function addNumber(sum, numsLeft, callback){
   if (numsLeft > 0) {
@@ -101,4 +101,77 @@ console.log("Turning on " + this.name);
   const myBoundTurnOn = turnOn.myBind(lamp);
   
 //   boundTurnOn(); // should say "Turning on a lamp"
-  myBoundTurnOn(); // should say "Turning on a lamp"
+  // myBoundTurnOn(); // should say "Turning on a lamp"
+
+
+
+
+  const readline = require("readline");
+
+const reader = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+// Write this first.
+function askIfGreaterThan(el1, el2, callback) {
+  // Prompt user to tell us whether el1 > el2; pass true back to the
+  // callback if true; else false.
+  reader.question(`Is this true or false, ${el1} > ${el2}`, function(answer) {
+    if (answer === "true"){
+      callback(true)
+    }
+    else {
+      callback(false)
+    }
+  })
+}
+
+// Once you're done testing askIfGreaterThan with dummy arguments, write this.
+function innerBubbleSortLoop(arr, i, madeAnySwaps) {
+  console.log(arr)
+  console.log(i)
+  console.log(madeAnySwaps)
+  if (i === arr.length - 1) {
+    // outerBubbleSortLoop(madeAnySwaps)
+    console.log("reached end")
+  }
+  else {
+    askIfGreaterThan(arr[i], arr[i + 1])
+   if (askIfGreaterThan(arr[i], arr[i + 1], ) === true) {
+    madeAnySwaps = true 
+    [arr[i], arr[i + 1]] = [arr[i + 1], arr[i]]
+   }  
+   innerBubbleSortLoop(arr, i + 1, madeAnySwaps)  
+  }
+}
+  // Do an "async loop":
+  // 1. If (i == arr.length - 1), call outerBubbleSortLoop, letting it
+  //    know whether any swap was made.
+  // 2. Else, use `askIfGreaterThan` to compare `arr[i]` and `arr[i +
+  //    1]`. Swap if necessary. Call `innerBubbleSortLoop` again to
+  //    continue the inner loop. You'll want to increment i for the
+  //    next call, and possibly switch madeAnySwaps if you did swap.
+
+// Once you're done testing innerBubbleSortLoop, write outerBubbleSortLoop.
+// Once you're done testing outerBubbleSortLoop, write absurdBubbleSort.
+
+function absurdBubbleSort(arr, sortCompletionCallback) {
+  function outerBubbleSortLoop(madeAnySwaps) {
+    // Begin an inner loop if you made any swaps. Otherwise, call
+    // `sortCompletionCallback`.
+  }
+  
+  // Kick the first outer loop off, starting `madeAnySwaps` as true.
+}
+
+absurdBubbleSort([3, 2, 1], function(arr) {
+  console.log("Sorted array: " + JSON.stringify(arr));
+  reader.close();
+});
+
+// askIfGreaterThan(2, 3, function(boolean) {
+//   console.log(boolean)
+// })
+
+innerBubbleSortLoop([3, 2, 1], 0, madeAnySwaps)
