@@ -106,7 +106,7 @@ console.log("Turning on " + this.name);
 
 
 
-  const readline = require("readline");
+const readline = require("readline");
 
 const reader = readline.createInterface({
   input: process.stdin,
@@ -128,23 +128,29 @@ function askIfGreaterThan(el1, el2, callback) {
 }
 
 // Once you're done testing askIfGreaterThan with dummy arguments, write this.
-function innerBubbleSortLoop(arr, i, madeAnySwaps) {
-  console.log(arr)
-  console.log(i)
-  console.log(madeAnySwaps)
+function innerBubbleSortLoop(arr, i, madeAnySwaps, outerBubbleSortLoop) {
+
+    
   if (i === arr.length - 1) {
-    // outerBubbleSortLoop(madeAnySwaps)
-    console.log("reached end")
-  }
-  else {
-    askIfGreaterThan(arr[i], arr[i + 1])
-   if (askIfGreaterThan(arr[i], arr[i + 1], ) === true) {
-    madeAnySwaps = true 
-    [arr[i], arr[i + 1]] = [arr[i + 1], arr[i]]
-   }  
-   innerBubbleSortLoop(arr, i + 1, madeAnySwaps)  
-  }
+    outerBubbleSortLoop(madeAnySwaps)
+  } else {
+    askIfGreaterThan(arr[i], arr[i + 1], function(boolean) {
+        if (boolean === true) {
+            console.log(boolean);
+            madeAnySwaps = true 
+            // [arr[i], arr[i + 1]] = [arr[i + 1], arr[i]]
+            let temp = arr[i]
+            let temp2 = arr[i + 1]
+            arr[i + 1] = temp
+            arr[i] = temp2
+            console.log(arr);
+        }  
+        console.log(arr);
+        innerBubbleSortLoop(arr, i + 1, madeAnySwaps, outerBubbleSortLoop)  
+    })
+  };
 }
+
   // Do an "async loop":
   // 1. If (i == arr.length - 1), call outerBubbleSortLoop, letting it
   //    know whether any swap was made.
@@ -158,9 +164,16 @@ function innerBubbleSortLoop(arr, i, madeAnySwaps) {
 
 function absurdBubbleSort(arr, sortCompletionCallback) {
   function outerBubbleSortLoop(madeAnySwaps) {
+    if (madeAnySwaps === true) {
+        innerBubbleSortLoop(arr, 0, madeAnySwaps=false, outerBubbleSortLoop)
+    } else {
+        sortCompletionCallback(arr);
+    }
     // Begin an inner loop if you made any swaps. Otherwise, call
     // `sortCompletionCallback`.
   }
+
+  outerBubbleSortLoop(madeAnySwaps=true);
   
   // Kick the first outer loop off, starting `madeAnySwaps` as true.
 }
@@ -171,7 +184,7 @@ absurdBubbleSort([3, 2, 1], function(arr) {
 });
 
 // askIfGreaterThan(2, 3, function(boolean) {
-//   console.log(boolean)
+//   return boolean; 
 // })
 
-innerBubbleSortLoop([3, 2, 1], 0, madeAnySwaps)
+// innerBubbleSortLoop([10, 20, 5, 3, 2, 1], 0, madeAnySwaps=false)
